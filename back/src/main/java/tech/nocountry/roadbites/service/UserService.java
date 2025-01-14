@@ -28,12 +28,12 @@ public class UserService {
 
     public User createUser(RegisterUserDto userDetails) {
         User newUser = new User(
-                userDetails.getUsername(),
-                userDetails.getFirstName(),
-                userDetails.getLastName(),
-                userDetails.getEmail(),
-                userDetails.getPhone(),
-                userDetails.getPlainPassword() // TODO: Encriptar la contraseña
+                userDetails.username(),
+                userDetails.firstName(),
+                userDetails.lastName(),
+                userDetails.email(),
+                userDetails.phone(),
+                userDetails.plainPassword() // TODO: Encriptar la contraseña
         );
         newUser.setCreated(LocalDateTime.now());
         newUser.setStatus(User.Status.ACTIVE); // TODO: Crear logica de activacion de usuarios
@@ -43,29 +43,29 @@ public class UserService {
     public User updateUser(Long id, UpdateUserDto userDetails) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-            if (userDetails.getUsername() != null) {
-                user.setUsername(userDetails.getUsername());
+            if (userDetails.username() != null) {
+                user.setUsername(userDetails.username());
             }
-            if (userDetails.getFirstName() != null) {
-                user.setFirstName(userDetails.getFirstName());
+            if (userDetails.firstName() != null) {
+                user.setFirstName(userDetails.firstName());
             }
-            if (userDetails.getLastName() != null) {
-                user.setLastName(userDetails.getLastName());
+            if (userDetails.lastName() != null) {
+                user.setLastName(userDetails.lastName());
             }
-            if (userDetails.getEmail() != null) {
-                user.setEmail(userDetails.getEmail());
+            if (userDetails.email() != null) {
+                user.setEmail(userDetails.email());
             }
-            if (userDetails.getPhone() != null) {
-                user.setPhone(userDetails.getPhone());
+            if (userDetails.phone() != null) {
+                user.setPhone(userDetails.phone());
             }
-            if (userDetails.getPasswordHash() != null) {
-                user.setPasswordHash(userDetails.getPasswordHash());
+            if (userDetails.passwordHash() != null) {
+                user.setPasswordHash(userDetails.passwordHash());
             }
-            if (userDetails.getStatus() != null) {
-                user.setStatus(userDetails.getStatus());
+            if (userDetails.status() != null) {
+                user.setStatus(userDetails.status());
             }
-            if (userDetails.getRole() != null) {
-                user.setRole(userDetails.getRole());
+            if (userDetails.role() != null) {
+                user.setRole(userDetails.role());
             }
             return userRepository.save(user);
         }
