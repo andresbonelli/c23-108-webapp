@@ -1,6 +1,8 @@
 package tech.nocountry.roadbites.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import tech.nocountry.roadbites.controller.dto.RegisterUserDto;
 import tech.nocountry.roadbites.controller.dto.UpdateUserDto;
 import tech.nocountry.roadbites.domain.model.User;
@@ -41,33 +43,34 @@ public class UserService {
     }
 
     public User updateUser(Long id, UpdateUserDto userDetails) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
-            if (userDetails.username() != null) {
-                user.setUsername(userDetails.username());
+        if (userDetails.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields to update.");
+        }
+        User existingUser = userRepository.findById(id).orElse(null);
+        if (existingUser != null) {
+            if  (userDetails.displayName().isPresent()) {
+                existingUser.setDisplayName(userDetails.displayName().get());
             }
-            if (userDetails.firstName() != null) {
-                user.setFirstName(userDetails.firstName());
+            if (userDetails.firstName().isPresent()) {
+                existingUser.setFirstName(userDetails.firstName().get());
             }
-            if (userDetails.lastName() != null) {
-                user.setLastName(userDetails.lastName());
+            if (userDetails.lastName().isPresent()) {
+                existingUser.setLastName(userDetails.lastName().get());
             }
-            if (userDetails.email() != null) {
-                user.setEmail(userDetails.email());
+            if (userDetails.phone().isPresent()) {
+                existingUser.setPhone(userDetails.phone().get());
             }
-            if (userDetails.phone() != null) {
-                user.setPhone(userDetails.phone());
+            if (userDetails.passwordHash().isPresent()) {
+                existingUser.setPasswordHash(userDetails.passwordHash().get());
             }
-            if (userDetails.passwordHash() != null) {
-                user.setPasswordHash(userDetails.passwordHash());
+            if (userDetails.status().isPresent()) {
+                existingUser.setStatus(userDetails.status().get());
             }
-            if (userDetails.status() != null) {
-                user.setStatus(userDetails.status());
+            if (userDetails.role().isPresent()) {
+                existingUser.setRole(userDetails.role().get());
             }
-            if (userDetails.role() != null) {
-                user.setRole(userDetails.role());
-            }
-            return userRepository.save(user);
+            existingUser.setLastUpdated(LocalDateTime.now());
+            return userRepository.save(existingUser);
         }
         return null;
     }
