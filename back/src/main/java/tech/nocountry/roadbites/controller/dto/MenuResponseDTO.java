@@ -8,6 +8,6 @@ public record MenuResponseDTO(
         Double price,
         String description,
         String image,
-        MenuCategory category
+        String category
 ) {
 }

@@ -2,6 +2,7 @@ package tech.nocountry.roadbites.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +21,7 @@ public class Menu {
     private String description;
     private String image;
     @ManyToOne
-    @JoinColumn(name = "menu_category", nullable = false)
+    @JoinColumn(name = "menu_category_id", nullable = false)
     private MenuCategory category;
-
 
 }

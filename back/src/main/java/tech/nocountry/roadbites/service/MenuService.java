@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.nocountry.roadbites.controller.dto.MenuResponseDTO;
 import tech.nocountry.roadbites.domain.repository.MenuRepository;
-import tech.nocountry.roadbites.domain.model.MenuCategory;
 
 import java.util.List;
 
@@ -23,12 +22,12 @@ public class MenuService {
                         menu.getPrice(),
                         menu.getDescription(),
                         menu.getImage(),
-                        menu.getCategory()
+                        menu.getCategory().getName()
                 )).toList();
     }
 
     public List<MenuResponseDTO> getMenuByCategory(String category) {
-        return menuRepository.findByCategory(category)
+        return menuRepository.findByCategoryName(category)
                 .stream()
                 .map( menu -> new MenuResponseDTO(
                         menu.getId(),
@@ -36,7 +35,7 @@ public class MenuService {
                         menu.getPrice(),
                         menu.getDescription(),
                         menu.getImage(),
-                        menu.getCategory()
+                        menu.getCategory().getName()
                 )).toList();
     }
 
