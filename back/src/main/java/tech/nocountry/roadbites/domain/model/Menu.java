@@ -14,10 +14,10 @@ public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private Double price;
-
+    private String description;
+    private String image;
     @ManyToOne
     @JoinColumn(name = "menu_category", nullable = false)
     private MenuCategory category;
