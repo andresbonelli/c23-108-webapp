@@ -1,10 +1,12 @@
 package tech.nocountry.roadbites.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import tech.nocountry.roadbites.controller.dto.RegisterUserDto;
 import tech.nocountry.roadbites.controller.dto.UpdateUserDto;
+import tech.nocountry.roadbites.domain.model.Status;
 import tech.nocountry.roadbites.domain.model.User;
 import tech.nocountry.roadbites.domain.repository.UserRepository;
 
@@ -12,13 +14,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public List<User> getAll() {
         return userRepository.findAll();
@@ -29,16 +28,10 @@ public class UserService {
     }
 
     public User createUser(RegisterUserDto userDetails) {
-        User newUser = new User(
-                userDetails.username(),
-                userDetails.firstName(),
-                userDetails.lastName(),
-                userDetails.email(),
-                userDetails.phone(),
-                userDetails.plainPassword() // TODO: Encriptar la contraseña
-        );
+        User newUser = buildUserFromDto(userDetails);
+        newUser.setDisplayName(newUser.getFirstName()+" "+newUser.getLastName());
+        newUser.setStatus(Status.ACTIVE); // TODO: Crear logica de activacion de usuarios
         newUser.setCreated(LocalDateTime.now());
-        newUser.setStatus(User.Status.ACTIVE); // TODO: Crear logica de activacion de usuarios
         return userRepository.save(newUser);
     }
 
@@ -77,5 +70,16 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    private User buildUserFromDto(RegisterUserDto userDetails) {
+        return User.builder()
+                .username(userDetails.username())
+                .firstName(userDetails.firstName())
+                .lastName(userDetails.lastName())
+                .email(userDetails.email())
+                .phone(userDetails.phone())
+                .passwordHash(userDetails.plainPassword())
+                .build();
     }
 }

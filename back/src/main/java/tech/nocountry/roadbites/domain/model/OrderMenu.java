@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "order_menu", schema = "public")
 public class OrderMenu {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
