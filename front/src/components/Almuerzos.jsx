@@ -87,13 +87,6 @@ const Almuerzos = ({ addToCart }) => {
 					</div>
 				))}
 			</div>
-			<NavLink to="/carrito">
-				<div className="absolute flex justify-center items-center h-20 bg-zinc-900 bg-opacity-70 bottom-0 w-full ">
-					<p className="text-center text-5xl text-white font-handwritten">
-						Carrito
-					</p>
-				</div>
-			</NavLink>
 		</div>
 	);
 };

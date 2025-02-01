@@ -1,4 +1,16 @@
-const Snacks = () => {
+import { NavLink } from 'react-router';
+
+/* eslint-disable react/prop-types */
+const Snacks = ({ addToCart }) => {
+	const handleAddToCart = product => {
+		console.log(product);
+		addToCart({
+			id: product.id,
+			img: product.imagen,
+			nombre: product.nombre,
+			precio: product.precio,
+		});
+	};
 	const snacks = [
 		{
 			id: 1,
@@ -63,7 +75,7 @@ const Snacks = () => {
 					{snacks.map(snack => (
 						<div
 							key={snack.id}
-							className="border rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
+							className="border bg-slate-50 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
 						>
 							<img
 								src={snack.imagen}
@@ -75,7 +87,10 @@ const Snacks = () => {
 							<p className="text-green-600 font-bold mt-2">
 								${snack.precio.toFixed(2)}
 							</p>
-							<button className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors w-full">
+							<button
+								className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors w-full"
+								onClick={() => handleAddToCart(snack)} // Changed from productData to almuerzo
+							>
 								Agregar al Carrito
 							</button>
 						</div>

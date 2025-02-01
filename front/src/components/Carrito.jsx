@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { GrSubtractCircle, GrAddCircle } from 'react-icons/gr';
 
-const Carrito = ({ cartItems, removeFromCart, setCartItems }) => {
-	const [quantities, setQuantities] = useState(
-		Object.fromEntries(cartItems.map(item => [item.id, 1]))
-	);
-
+const Carrito = ({ cartItems, setCartItems }) => {
 	const increaseQuantity = itemId => {
 		setCartItems(prevItems =>
 			prevItems.map(item =>

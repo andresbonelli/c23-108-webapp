@@ -34,10 +34,6 @@ function App() {
 		});
 	};
 
-	const removeFromCart = itemId => {
-		setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
-	};
-
 	return (
 		<>
 			<Routes>
@@ -48,15 +44,14 @@ function App() {
 					element={<Almuerzos addToCart={addToCart} />}
 				/>
 				<Route path="/bebidas" element={<Bebidas />} />
-				<Route path="/snacks" element={<Snacks />} />
+				<Route
+					path="/snacks"
+					element={<Snacks addToCart={addToCart} />}
+				/>
 				<Route
 					path="/carrito"
 					element={
-						<Carrito
-							cartItems={cartItems}
-							removeFromCart={removeFromCart}
-							setCartItems={setCartItems}
-						/>
+						<Carrito cartItems={cartItems} setCartItems={setCartItems} />
 					}
 				/>
 			</Routes>
