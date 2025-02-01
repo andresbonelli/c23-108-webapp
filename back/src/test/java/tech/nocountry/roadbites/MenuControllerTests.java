@@ -14,7 +14,7 @@ import org.hamcrest.Matchers;
 public class MenuControllerTests {
 
     @ServiceConnection
-    static final MySQLContainer mySqlContainer = new MySQLContainer("mysql:8.0.26")
+    static final MySQLContainer mySqlContainer = new MySQLContainer("mysql:8.3.0")
             .withDatabaseName("roadbites")
             .withUsername("user")
             .withPassword("password");
