@@ -4,12 +4,15 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.testcontainers.containers.MySQLContainer;
 import tech.nocountry.roadbites.controller.UserController;
 import tech.nocountry.roadbites.controller.dto.RegisterUserDto;
 import tech.nocountry.roadbites.controller.dto.UpdateUserDto;
@@ -24,16 +27,21 @@ import static org.aspectj.bridge.MessageUtil.fail;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTests {
 
+    @ServiceConnection
+    static final MySQLContainer mySqlContainer = new MySQLContainer("mysql:8.3.0")
+            .withDatabaseName("roadbites")
+            .withUsername("user")
+            .withPassword("password");
+
+    static {
+        mySqlContainer.start();
+    }
+
     @LocalServerPort
     private Integer port;
 
     @Autowired
-    private UserController userController;
-
-    @Autowired
     private UserRepository userRepository;
-
-    private User user1;
 
     @BeforeEach
     void setup() {
@@ -58,6 +66,11 @@ public class UserControllerTests {
                 .then()
                 .extract()
                 .response();
+    }
+
+    @AfterAll
+    static void afterAll() {
+        mySqlContainer.stop();
     }
 
     @Test

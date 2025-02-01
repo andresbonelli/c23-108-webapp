@@ -1,13 +1,14 @@
 
 services:
   roadbites_mysql:
-    image: "mysql:8.0"
+    image: "mysql:8.3.0"
     container_name: roadbites_mysql
     restart: always
     ports:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: roadbites
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: user
       MYSQL_PASSWORD: password
 
