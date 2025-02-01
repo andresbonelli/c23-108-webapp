@@ -1,5 +1,3 @@
-import { NavLink } from 'react-router';
-
 /* eslint-disable react/prop-types */
 const Snacks = ({ addToCart }) => {
 	const handleAddToCart = product => {

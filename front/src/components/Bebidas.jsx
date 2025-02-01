@@ -1,4 +1,15 @@
-const Bebidas = () => {
+/* eslint-disable react/prop-types */
+
+const Bebidas = ({ addToCart }) => {
+	const handleAddToCart = product => {
+		console.log(product);
+		addToCart({
+			id: product.id,
+			img: product.imagen,
+			nombre: product.nombre,
+			precio: product.precio,
+		});
+	};
 	const bebidas = [
 		{
 			id: 1,
@@ -110,21 +121,22 @@ const Bebidas = () => {
 				{bebidas.map(bebida => (
 					<div
 						key={bebida.id}
-						className="bg-white/90 backdrop-blur-sm border-2 border-emerald-200 rounded-xl p-6 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+						className="border bg-slate-50 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
 					>
-						<div className="relative mb-4">
-							<img
-								src={bebida.imagen}
-								alt={bebida.nombre}
-								className="w-full h-48 object-cover rounded-lg shadow-md"
-							/>
-							<div className="absolute top-2 right-2 bg-emerald-500 text-white px-3 py-1 rounded-full font-bold">
-								${bebida.precio.toFixed(2)}
-							</div>
-						</div>
-						<h3 className="text-2xl font-handwritten text-emerald-900 mb-2">{bebida.nombre}</h3>
-						<p className="text-emerald-700 mb-4 italic">{bebida.descripcion}</p>
-						<button className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold py-3 px-6 rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg transform active:scale-95">
+						<img
+							src={bebida.imagen}
+							alt={bebida.nombre}
+							className="w-full h-48 object-cover rounded-lg mb-4"
+						/>
+						<h3 className="text-xl font-semibold">{bebida.nombre}</h3>
+						<p className="text-gray-600">{bebida.descripcion}</p>
+						<p className="text-green-600 font-bold mt-2">
+							${bebida.precio.toFixed(2)}
+						</p>
+						<button
+							className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors w-full"
+							onClick={() => handleAddToCart(bebida)} // Changed from productData to almuerzo
+						>
 							Agregar al Carrito
 						</button>
 					</div>

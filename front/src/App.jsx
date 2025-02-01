@@ -43,11 +43,8 @@ function App() {
 					path="/almuerzos"
 					element={<Almuerzos addToCart={addToCart} />}
 				/>
-				<Route path="/bebidas" element={<Bebidas />} />
-				<Route
-					path="/snacks"
-					element={<Snacks addToCart={addToCart} />}
-				/>
+				<Route path="/bebidas" element={<Bebidas addToCart={addToCart} />} />
+				<Route path="/snacks" element={<Snacks addToCart={addToCart} />} />
 				<Route
 					path="/carrito"
 					element={
