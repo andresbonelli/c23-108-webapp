@@ -1,0 +1,26 @@
+
+services:
+  roadbites_mysql:
+    image: "mysql:8.0"
+    container_name: roadbites_mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: roadbites
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+  roadbites_back_api:
+    build: .
+    container_name: roadbites_back_api
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 2
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_URL: jdbc:mysql://roadbites_mysql:3306/roadbites?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      MYSQL_USERNAME: user
+      MYSQL_PASSWORD: password
