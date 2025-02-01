@@ -1,6 +1,5 @@
-import { NavLink } from 'react-router';
-
 /* eslint-disable react/prop-types */
+import { TiShoppingCart } from 'react-icons/ti';
 const almuerzos = [
 	{
 		id: 1,
@@ -79,10 +78,11 @@ const Almuerzos = ({ addToCart }) => {
 							${almuerzo.precio.toFixed(2)}
 						</p>
 						<button
-							className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors w-full"
+							className="mt-2 bg-green-500 text-white flex items-center justify-center px-4 py-4 space-x-2 rounded hover:bg-green-600 transition-colors w-full"
 							onClick={() => handleAddToCart(almuerzo)} // Changed from productData to almuerzo
 						>
-							Agregar al Carrito
+							<TiShoppingCart className="text-2xl" />
+							<p>Agregar al Carrito</p>
 						</button>
 					</div>
 				))}

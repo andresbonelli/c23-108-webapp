@@ -1,4 +1,3 @@
-import Navbar from '../components/Navbar';
 import food from '../assets/img/food.jpg';
 import drink from '../assets/img/drink.jpg';
 import snacks from '../assets/img/snacks.jpg';
@@ -9,7 +8,6 @@ const Home = () => {
 		<div>
 			<>
 				<header className="h-screen bg-[url('./assets/img/main_banner.jpg')] bg-cover bg-center flex flex-col">
-					<Navbar />
 					<h1 className="font-handwritten text-[200px] m-auto text-white text-center">
 						Food Truck
 					</h1>

@@ -1,3 +1,5 @@
+import { TiShoppingCart } from 'react-icons/ti';
+
 /* eslint-disable react/prop-types */
 const Snacks = ({ addToCart }) => {
 	const handleAddToCart = product => {
@@ -86,10 +88,11 @@ const Snacks = ({ addToCart }) => {
 								${snack.precio.toFixed(2)}
 							</p>
 							<button
-								className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors w-full"
-								onClick={() => handleAddToCart(snack)} // Changed from productData to almuerzo
+								className="mt-2 bg-green-500 text-white flex items-center justify-center px-4 py-4 space-x-2 rounded hover:bg-green-600 transition-colors w-full"
+								onClick={() => handleAddToCart(snack)}
 							>
-								Agregar al Carrito
+								<TiShoppingCart className="text-2xl" />
+								<p>Agregar al Carrito</p>
 							</button>
 						</div>
 					))}

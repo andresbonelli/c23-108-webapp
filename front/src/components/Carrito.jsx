@@ -24,6 +24,10 @@ const Carrito = ({ cartItems, setCartItems }) => {
 	};
 
 	const total = cartItems.reduce((sum, item) => {
+		console.log('Item:', item.nombre);
+		console.log('Precio:', item.precio);
+		console.log('Quantity:', item.quantity);
+		console.log('Subtotal:', item.precio * item.quantity);
 		const itemTotal = item.precio * item.quantity;
 		return sum + itemTotal;
 	}, 0);
