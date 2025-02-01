@@ -1,3 +1,6 @@
+import { NavLink } from 'react-router';
+
+/* eslint-disable react/prop-types */
 const almuerzos = [
 	{
 		id: 1,
@@ -41,7 +44,16 @@ const almuerzos = [
 	},
 ];
 
-const Almuerzos = () => {
+const Almuerzos = ({ addToCart }) => {
+	const handleAddToCart = product => {
+		console.log(product);
+		addToCart({
+			id: product.id,
+			img: product.imagen,
+			nombre: product.nombre,
+			precio: product.precio,
+		});
+	};
 	return (
 		<div
 			style={{ backgroundImage: "url('/src/assets/img/bg_food.jpg')" }}
@@ -66,12 +78,22 @@ const Almuerzos = () => {
 						<p className="text-green-600 font-bold mt-2">
 							${almuerzo.precio.toFixed(2)}
 						</p>
-						<button className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors w-full">
+						<button
+							className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors w-full"
+							onClick={() => handleAddToCart(almuerzo)} // Changed from productData to almuerzo
+						>
 							Agregar al Carrito
 						</button>
 					</div>
 				))}
 			</div>
+			<NavLink to="/carrito">
+				<div className="absolute flex justify-center items-center h-20 bg-zinc-900 bg-opacity-70 bottom-0 w-full ">
+					<p className="text-center text-5xl text-white font-handwritten">
+						Carrito
+					</p>
+				</div>
+			</NavLink>
 		</div>
 	);
 };
