@@ -1,0 +1,156 @@
+[
+  {
+    "name": "Arroz con Pollo",
+    "price": 12.5,
+    "description": "Arroz salteado con pollo y vegetales",
+    "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=300",
+    "menuCategoryId": 1
+  },
+  {
+    "name": "Pasta Carbonara",
+    "price": 11.5,
+    "description": "Pasta con salsa cremosa y tocino",
+    "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=300",
+    "menuCategoryId": 1
+  },
+  {
+    "name": "Ensalada César",
+    "price": 9.0,
+    "description": "Lechuga romana, crutones, pollo y aderezo césar",
+    "image": "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?q=80&w=300",
+    "menuCategoryId": 1
+  },
+  {
+    "name": "Salmón a la Parrilla",
+    "price": 15.0,
+    "description": "Salmón fresco con vegetales asados",
+    "image": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=300",
+    "menuCategoryId": 1
+  },
+  {
+    "name": "Bistec con Papas",
+    "price": 14.0,
+    "description": "Bistec a la parrilla con papas fritas",
+    "image": "https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=300",
+    "menuCategoryId": 1
+  },
+  {
+    "name": "Coca-Cola",
+    "price": 2.5,
+    "description": "Refresco carbonatado",
+    "image": "https://images.unsplash.com/photo-1554866585-cd94860890b7?q=80&w=300",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Agua Mineral",
+    "price": 1.5,
+    "description": "Agua con gas",
+    "image": "https://images.unsplash.com/photo-1616118132534-381148898bb4?q=80&w=300",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Jugo de Naranja",
+    "price": 3.0,
+    "description": "Jugo natural",
+    "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=300",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Café Americano",
+    "price": 2.0,
+    "description": "Café caliente",
+    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=300",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Limonada",
+    "price": 4.0,
+    "description": "Limonada de lima",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrJG9LkODHmYWVx13R2i6VncSEQ6pgDMv8cQ&s",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Coca-Cola",
+    "price": 2.5,
+    "description": "Refresco carbonatado",
+    "image": "https://images.unsplash.com/photo-1554866585-cd94860890b7?q=80&w=300",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Agua Mineral",
+    "price": 1.5,
+    "description": "Agua con gas",
+    "image": "https://images.unsplash.com/photo-1616118132534-381148898bb4?q=80&w=300",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Jugo de Naranja",
+    "price": 3.0,
+    "description": "Jugo natural",
+    "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=300",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Café Americano",
+    "price": 2.0,
+    "description": "Café caliente",
+    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=300",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Limonada",
+    "price": 4.0,
+    "description": "Limonada de lima",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrJG9LkODHmYWVx13R2i6VncSEQ6pgDMv8cQ&s",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Limonada",
+    "price": 4.0,
+    "description": "Limonada de lima",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrJG9LkODHmYWVx13R2i6VncSEQ6pgDMv8cQ&s",
+    "menuCategoryId": 2
+  },
+  {
+    "name": "Papas Fritas",
+    "price": 2.0,
+    "description": "Papas crujientes y saladas",
+    "image": "https://images.unsplash.com/photo-1613919113640-25732ec5e61f?q=80&w=300",
+    "menuCategoryId": 3
+  },
+  {
+    "name": "Nachos",
+    "price": 3.5,
+    "description": "Con queso fundido",
+    "image": "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?q=80&w=300",
+    "menuCategoryId": 3
+  },
+  {
+    "name": "Palomitas",
+    "price": 2.5,
+    "description": "Palomitas con mantequilla",
+    "image": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?q=80&w=300",
+    "menuCategoryId": 3
+  },
+  {
+    "name": "Pretzels",
+    "price": 2.0,
+    "description": "Pretzels salados",
+    "image": "https://images.unsplash.com/photo-1595475207225-428b62bda831?q=80&w=300",
+    "menuCategoryId": 3
+  },
+  {
+    "name": "Maní",
+    "price": 1.5,
+    "description": "Maní tostado",
+    "image": "https://images.unsplash.com/photo-1574492543172-5e48d3112c7b?q=80&w=300",
+    "menuCategoryId": 3
+  },
+  {
+    "name": "Doritos",
+    "price": 2.0,
+    "description": "Tortillas de maíz",
+    "image": "https://images.unsplash.com/photo-1600952841320-db92ec4047ca?q=80&w=300",
+    "menuCategoryId": 3
+  }
+]
