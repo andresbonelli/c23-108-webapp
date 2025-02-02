@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.nocountry.roadbites.controller.dto.RegisterUserDto;
-import tech.nocountry.roadbites.controller.dto.UpdateUserDto;
+import tech.nocountry.roadbites.controller.dto.user.RegisterUserDTO;
+import tech.nocountry.roadbites.controller.dto.user.UpdateUserDTO;
 import tech.nocountry.roadbites.domain.model.User;
 import tech.nocountry.roadbites.service.UserService;
 
@@ -36,12 +36,12 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody RegisterUserDto userDetails) {
+    public User createUser(@RequestBody RegisterUserDTO userDetails) {
         return userService.createUser(userDetails);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserDto userDetails) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserDTO userDetails) {
         User updatedUser = userService.updateUser(id, userDetails);
         if (updatedUser != null) {
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);

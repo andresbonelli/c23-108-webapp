@@ -1,5 +1,5 @@
 package tech.nocountry.roadbites.domain.model;
 
-public enum Status {
+public enum AccountStatus {
     ACTIVE, INACTIVE;
 }

@@ -1,6 +1,4 @@
-package tech.nocountry.roadbites.controller.dto;
-
-import tech.nocountry.roadbites.domain.model.MenuCategory;
+package tech.nocountry.roadbites.controller.dto.menu;
 
 public record MenuResponseDTO(
         Long id,

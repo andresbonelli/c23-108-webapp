@@ -8,14 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import tech.nocountry.roadbites.controller.dto.CreateCategoryDTO;
-import tech.nocountry.roadbites.controller.dto.CreateMenuDTO;
+import tech.nocountry.roadbites.controller.dto.menu.CreateCategoryDTO;
+import tech.nocountry.roadbites.controller.dto.menu.CreateMenuDTO;
 import tech.nocountry.roadbites.domain.model.Menu;
 import tech.nocountry.roadbites.domain.model.MenuCategory;
 import tech.nocountry.roadbites.domain.repository.CategoryRepository;
 import tech.nocountry.roadbites.domain.repository.MenuRepository;
 
-import java.io.InputStream;
 import java.util.List;
 
 @Component
