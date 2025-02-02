@@ -3,8 +3,8 @@ package tech.nocountry.roadbites.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import tech.nocountry.roadbites.controller.dto.PlaceOrderDTO;
-import tech.nocountry.roadbites.domain.model.Order;
+import tech.nocountry.roadbites.controller.dto.order.OrderResponseDTO;
+import tech.nocountry.roadbites.controller.dto.order.PlaceOrderDTO;
 import tech.nocountry.roadbites.service.OrderService;
 
 import java.util.List;
@@ -18,13 +18,19 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Order placeOrder(PlaceOrderDTO order) {
+    public OrderResponseDTO placeOrder(@RequestBody PlaceOrderDTO order) {
         return orderService.placeOrder(order);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Order> getAllOrders() {
+    public List<OrderResponseDTO> getAllOrders() {
         return orderService.getAll();
+    }
+
+    @GetMapping("/user/{userName}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderResponseDTO> getAllOrdersByUser(@PathVariable String userName) {
+        return orderService.getAllByUser(userName);
     }
 }

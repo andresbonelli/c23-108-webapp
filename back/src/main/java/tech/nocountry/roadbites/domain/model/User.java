@@ -27,7 +27,7 @@ public class User {
     private String email;
     private String phone;
     private String passwordHash;
-    private Status status;
+    private AccountStatus status;
     private LocalDateTime created;
     private LocalDateTime lastUpdated;
     private Role role;

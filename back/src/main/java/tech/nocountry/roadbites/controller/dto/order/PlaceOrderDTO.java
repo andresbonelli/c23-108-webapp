@@ -1,9 +1,9 @@
-package tech.nocountry.roadbites.controller.dto;
+package tech.nocountry.roadbites.controller.dto.order;
 
 import java.util.List;
 
 public record PlaceOrderDTO(
-        Long userId,
+        String userName,
         List<CreateOrderMenuDTO> orderMenus
 ) {
 }

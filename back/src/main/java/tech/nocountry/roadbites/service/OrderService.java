@@ -2,17 +2,14 @@ package tech.nocountry.roadbites.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tech.nocountry.roadbites.controller.dto.CreateOrderMenuDTO;
-import tech.nocountry.roadbites.controller.dto.PlaceOrderDTO;
-import tech.nocountry.roadbites.domain.model.Menu;
-import tech.nocountry.roadbites.domain.model.Order;
-import tech.nocountry.roadbites.domain.model.OrderMenu;
-import tech.nocountry.roadbites.domain.model.User;
+import tech.nocountry.roadbites.controller.dto.order.OrderMenuResponseDTO;
+import tech.nocountry.roadbites.controller.dto.order.OrderResponseDTO;
+import tech.nocountry.roadbites.controller.dto.order.PlaceOrderDTO;
+import tech.nocountry.roadbites.domain.model.*;
 import tech.nocountry.roadbites.domain.repository.OrderMenuRepository;
 import tech.nocountry.roadbites.domain.repository.OrderRepository;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,9 +21,11 @@ public class OrderService {
     private final UserService userService;
     private final MenuService menuService;
 
-    public Order placeOrder(PlaceOrderDTO order) {
+    public OrderResponseDTO placeOrder(PlaceOrderDTO order) {
         Order newOrder = buildOrderFromDto(order);
         newOrder.setOrderDate(LocalDateTime.now());
+        newOrder.setStatus(OrderStatus.PENDING);
+
         Order savedOrder = orderRepository.save(newOrder);
         order.orderMenus().forEach(orderMenu -> {
             Menu menu = menuService.getMenuById(orderMenu.menuId());
@@ -38,20 +37,36 @@ public class OrderService {
             orderMenuRepository.save(newOrderMenu);
         }
         );
-        return savedOrder;
+        return buildResponseDtoFromOrder(savedOrder);
     }
 
-    public List<Order> getAll() {
-        return orderRepository.findAll();
+    public List<OrderResponseDTO> getAll() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream().map(this::buildResponseDtoFromOrder).toList();
+    }
+
+    public List<OrderResponseDTO> getAllByUser(String userName) {
+        List<Order> orders = orderRepository.findByUserName(userName);
+        return orders.stream().map(this::buildResponseDtoFromOrder).toList();
     }
 
     private Order buildOrderFromDto(PlaceOrderDTO order) {
-        User user = userService.getUserById(order.userId());
-        if (user == null) {
-            throw new RuntimeException("User not found");
-        }
         return Order.builder()
-                .user(user)
+                .userName(order.userName())
                 .build();
+    }
+
+    private OrderResponseDTO buildResponseDtoFromOrder(Order order) {
+        List<OrderMenu> orderMenus = orderMenuRepository.findByOrder(order);
+        return new OrderResponseDTO(
+                order.getId(),
+                order.getUserName(),
+                order.getOrderDate(),
+                order.getStatus(),
+                orderMenus.stream().map(orderMenu -> new OrderMenuResponseDTO(
+                        orderMenu.getMenu().getId(),
+                        orderMenu.getQuantity()
+                )).toList()
+        );
     }
 }
