@@ -118,27 +118,33 @@ const Bebidas = ({ addToCart }) => {
 			style={{ backgroundImage: "url('/src/assets/img/bg_food.jpg')" }}
 			className="container mx-auto p-8 bg-fixed"
 		>
-			<h2 className="text-7xl text-emerald-800 text-center font-bold mb-8 font-handwritten drop-shadow-lg">
+			<h2 className="text-8xl text-emerald-950 text-center font-bold mb-12 font-handwritten drop-shadow-lg">
 				Bebidas Disponibles
 			</h2>
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[90%] mx-auto">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-[90%] mx-auto">
 				{bebidas.map(bebida => (
 					<div
 						key={bebida.id}
-						className="border bg-slate-50 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
+						className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-2 border-emerald-400"
 					>
-						<img
-							src={bebida.imagen}
-							alt={bebida.nombre}
-							className="w-full h-48 object-cover rounded-lg mb-4"
-						/>
-						<h3 className="text-xl font-semibold">{bebida.nombre}</h3>
-						<p className="text-gray-600">{bebida.descripcion}</p>
-						<p className="text-green-600 font-bold mt-2">
-							${bebida.precio.toFixed(2)}
+						<div className="relative mb-6">
+							<img
+								src={bebida.imagen}
+								alt={bebida.nombre}
+								className="w-full h-56 object-cover rounded-xl shadow-md hover:shadow-lg transition-shadow"
+							/>
+							<div className="absolute top-3 right-3 bg-amber-500 text-white px-4 py-1 rounded-full font-semibold shadow-lg">
+								${bebida.precio.toFixed(2)}
+							</div>
+						</div>
+						<h3 className="text-2xl font-bold text-emerald-950 mb-2">
+							{bebida.nombre}
+						</h3>
+						<p className="text-emerald-700 mb-4 font-medium">
+							{bebida.descripcion}
 						</p>
 						<button
-							className="mt-2 bg-green-500 text-white flex items-center justify-center px-4 py-4 space-x-2 rounded hover:bg-green-600 transition-colors w-full"
+							className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center px-6 py-4 rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg gap-3 font-semibold"
 							onClick={() => handleAddToCart(bebida)}
 						>
 							<TiShoppingCart className="text-2xl" />
