@@ -3,6 +3,7 @@ package tech.nocountry.roadbites.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.nocountry.roadbites.controller.dto.MenuResponseDTO;
+import tech.nocountry.roadbites.domain.model.Menu;
 import tech.nocountry.roadbites.domain.repository.MenuRepository;
 
 import java.util.List;
@@ -37,6 +38,10 @@ public class MenuService {
                         menu.getImage(),
                         menu.getCategory().getName()
                 )).toList();
+    }
+
+    public Menu getMenuById(Long id) {
+        return menuRepository.findById(id).orElse(null);
     }
 
 }
