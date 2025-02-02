@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import tech.nocountry.roadbites.controller.dto.RegisterUserDto;
-import tech.nocountry.roadbites.controller.dto.UpdateUserDto;
-import tech.nocountry.roadbites.domain.model.Status;
+import tech.nocountry.roadbites.controller.dto.user.RegisterUserDTO;
+import tech.nocountry.roadbites.controller.dto.user.UpdateUserDTO;
+import tech.nocountry.roadbites.domain.model.AccountStatus;
 import tech.nocountry.roadbites.domain.model.User;
 import tech.nocountry.roadbites.domain.repository.UserRepository;
 
@@ -27,15 +27,15 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User createUser(RegisterUserDto userDetails) {
+    public User createUser(RegisterUserDTO userDetails) {
         User newUser = buildUserFromDto(userDetails);
         newUser.setDisplayName(newUser.getFirstName()+" "+newUser.getLastName());
-        newUser.setStatus(Status.ACTIVE); // TODO: Crear logica de activacion de usuarios
+        newUser.setStatus(AccountStatus.ACTIVE); // TODO: Crear logica de activacion de usuarios
         newUser.setCreated(LocalDateTime.now());
         return userRepository.save(newUser);
     }
 
-    public User updateUser(Long id, UpdateUserDto userDetails) {
+    public User updateUser(Long id, UpdateUserDTO userDetails) {
         if (userDetails.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No fields to update.");
         }
@@ -72,7 +72,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    private User buildUserFromDto(RegisterUserDto userDetails) {
+    private User buildUserFromDto(RegisterUserDTO userDetails) {
         return User.builder()
                 .username(userDetails.username())
                 .firstName(userDetails.firstName())

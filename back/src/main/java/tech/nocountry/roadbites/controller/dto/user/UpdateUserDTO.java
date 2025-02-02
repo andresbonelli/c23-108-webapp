@@ -1,19 +1,19 @@
-package tech.nocountry.roadbites.controller.dto;
+package tech.nocountry.roadbites.controller.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import tech.nocountry.roadbites.domain.model.Role;
-import tech.nocountry.roadbites.domain.model.Status;
+import tech.nocountry.roadbites.domain.model.AccountStatus;
 
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record UpdateUserDto(
+public record UpdateUserDTO(
         Optional<String> displayName,
         Optional<String> firstName,
         Optional<String> lastName,
         Optional<String> phone,
         Optional<String> passwordHash,
-        Optional<Status> status,
+        Optional<AccountStatus> status,
         Optional<Role> role
 ) {
     public boolean isEmpty() {

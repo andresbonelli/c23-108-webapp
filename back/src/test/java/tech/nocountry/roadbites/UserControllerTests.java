@@ -1,11 +1,7 @@
 package tech.nocountry.roadbites;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.MySQLContainer;
-import tech.nocountry.roadbites.controller.UserController;
-import tech.nocountry.roadbites.controller.dto.RegisterUserDto;
-import tech.nocountry.roadbites.controller.dto.UpdateUserDto;
-import tech.nocountry.roadbites.domain.model.User;
 import tech.nocountry.roadbites.domain.repository.UserRepository;
-
-import java.util.Optional;
 
 import static org.aspectj.bridge.MessageUtil.fail;
 
