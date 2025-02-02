@@ -2,7 +2,7 @@ package tech.nocountry.roadbites.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tech.nocountry.roadbites.controller.dto.MenuResponseDTO;
+import tech.nocountry.roadbites.controller.dto.menu.MenuResponseDTO;
 import tech.nocountry.roadbites.domain.model.Menu;
 import tech.nocountry.roadbites.domain.repository.MenuRepository;
 

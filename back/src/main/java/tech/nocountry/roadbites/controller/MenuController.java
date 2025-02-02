@@ -3,7 +3,7 @@ package tech.nocountry.roadbites.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import tech.nocountry.roadbites.controller.dto.MenuResponseDTO;
+import tech.nocountry.roadbites.controller.dto.menu.MenuResponseDTO;
 import tech.nocountry.roadbites.service.MenuService;
 
 import java.util.List;

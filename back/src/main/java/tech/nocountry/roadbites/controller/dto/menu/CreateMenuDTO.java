@@ -1,4 +1,4 @@
-package tech.nocountry.roadbites.controller.dto;
+package tech.nocountry.roadbites.controller.dto.menu;
 
 public record CreateMenuDTO(
         String name,
