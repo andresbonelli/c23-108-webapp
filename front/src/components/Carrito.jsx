@@ -26,16 +26,16 @@ const Carrito = ({ cartItems, setCartItems }) => {
 	};
 
 	const total = cartItems.reduce((sum, item) => {
-		console.log('Item:', item.nombre);
-		console.log('Precio:', item.precio);
-		console.log('Quantity:', item.quantity);
-		console.log('Subtotal:', item.precio * item.quantity);
 		const itemTotal = item.precio * item.quantity;
 		return sum + itemTotal;
 	}, 0);
 
 	return (
-		<div
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			transition={{ duration: 1 }}
 			style={{ backgroundImage: "url('/src/assets/img/bg_food.jpg')" }}
 			className="container mx-auto p-8 bg-fixed min-h-screen"
 		>
@@ -102,7 +102,7 @@ const Carrito = ({ cartItems, setCartItems }) => {
 					</div>
 				)}
 			</motion.div>
-		</div>
+		</motion.div>
 	);
 };
 

@@ -6,6 +6,7 @@ import Almuerzos from './components/Almuerzos';
 import Carrito from './components/Carrito';
 import { useState } from 'react';
 import Navbar from './components/Navbar';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
 	const [cartItems, setCartItems] = useState([]);
@@ -41,7 +42,7 @@ function App() {
 	};
 
 	return (
-		<>
+		<AnimatePresence mode="wait">
 			<Navbar cartItems={cartItems} />
 			<Routes>
 				<Route path="/*" element={<h1>not found</h1>} />
@@ -59,7 +60,7 @@ function App() {
 					}
 				/>
 			</Routes>
-		</>
+		</AnimatePresence>
 	);
 }
 

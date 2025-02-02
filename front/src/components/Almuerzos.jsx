@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { TiShoppingCart } from 'react-icons/ti';
+import { motion } from 'framer-motion';
 const almuerzos = [
 	{
 		id: 1,
@@ -54,7 +55,11 @@ const Almuerzos = ({ addToCart }) => {
 		});
 	};
 	return (
-		<div
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			transition={{ duration: 1 }}
 			style={{ backgroundImage: "url('/src/assets/img/bg_food.jpg')" }}
 			className="container mx-auto p-8 bg-fixed"
 		>
@@ -87,7 +92,7 @@ const Almuerzos = ({ addToCart }) => {
 					</div>
 				))}
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 

@@ -1,5 +1,5 @@
 import { TiShoppingCart } from 'react-icons/ti';
-
+import { motion } from 'framer-motion';
 /* eslint-disable react/prop-types */
 const Snacks = ({ addToCart }) => {
 	const handleAddToCart = product => {
@@ -63,7 +63,12 @@ const Snacks = ({ addToCart }) => {
 	];
 
 	return (
-		<div>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			transition={{ duration: 1 }}
+		>
 			<div
 				style={{ backgroundImage: "url('/src/assets/img/bg_food.jpg')" }}
 				className="container mx-auto p-8 bg-fixed"
@@ -98,7 +103,7 @@ const Snacks = ({ addToCart }) => {
 					))}
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 
