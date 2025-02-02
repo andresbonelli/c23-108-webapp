@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import tech.nocountry.roadbites.controller.dto.user.RegisterUserDTO;
 import tech.nocountry.roadbites.controller.dto.user.UpdateUserDTO;
 import tech.nocountry.roadbites.domain.model.AccountStatus;
+import tech.nocountry.roadbites.domain.model.Role;
 import tech.nocountry.roadbites.domain.model.User;
 import tech.nocountry.roadbites.domain.repository.UserRepository;
 
@@ -31,7 +32,9 @@ public class UserService {
         User newUser = buildUserFromDto(userDetails);
         newUser.setDisplayName(newUser.getFirstName()+" "+newUser.getLastName());
         newUser.setStatus(AccountStatus.ACTIVE); // TODO: Crear logica de activacion de usuarios
+        newUser.setRole(Role.CUSTOMER);
         newUser.setCreated(LocalDateTime.now());
+        newUser.setLastUpdated(LocalDateTime.now());
         return userRepository.save(newUser);
     }
 
