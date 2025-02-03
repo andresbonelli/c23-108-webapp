@@ -1,57 +1,27 @@
 /* eslint-disable react/prop-types */
 import { TiShoppingCart } from 'react-icons/ti';
 import { motion } from 'framer-motion';
-const almuerzos = [
-	{
-		id: 1,
-		nombre: 'Arroz con Pollo',
-		precio: 12.5,
-		descripcion: 'Arroz salteado con pollo y vegetales',
-		imagen:
-			'https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=300',
-	},
-	{
-		id: 2,
-		nombre: 'Pasta Carbonara',
-		precio: 11.5,
-		descripcion: 'Pasta con salsa cremosa y tocino',
-		imagen:
-			'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=300',
-	},
-	{
-		id: 3,
-		nombre: 'Ensalada César',
-		precio: 9.0,
-		descripcion: 'Lechuga romana, crutones, pollo y aderezo césar',
-		imagen:
-			'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?q=80&w=300',
-	},
-	{
-		id: 4,
-		nombre: 'Salmón a la Parrilla',
-		precio: 15.0,
-		descripcion: 'Salmón fresco con vegetales asados',
-		imagen:
-			'https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=300',
-	},
-	{
-		id: 5,
-		nombre: 'Bistec con Papas',
-		precio: 14.0,
-		descripcion: 'Bistec a la parrilla con papas fritas',
-		imagen:
-			'https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=300',
-	},
-];
+import { useState, useEffect } from 'react';
 
-const Almuerzos = ({ addToCart }) => {
-	const handleAddToCart = product => {
-		console.log(product);
+const MenuList = ({ addToCart, category }) => {
+	const [menus, setMenus] = useState([]);
+	useEffect(() => {
+		fetch(`http://localhost:8080/api/menu/category/${category}`)
+			.then(response => response.json())
+			.then(data => {
+				setMenus(data);
+			})
+			.catch(error => {
+				console.error('Error fetching menus:', error);
+			});
+	}, [category]);
+	const handleAddToCart = menu => {
+		console.log(menu);
 		addToCart({
-			id: product.id,
-			img: product.imagen,
-			nombre: product.nombre,
-			precio: product.precio,
+			id: menu.id,
+			img: menu.image,
+			name: menu.name,
+			price: menu.price,
 		});
 	};
 	return (
@@ -64,33 +34,33 @@ const Almuerzos = ({ addToCart }) => {
 			className="container mx-auto p-8 bg-fixed"
 		>
 			<h2 className="text-8xl text-emerald-950 text-center font-bold mb-12 font-handwritten drop-shadow-lg">
-				Menú de Almuerzos
+				Menú de {category}
 			</h2>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-[90%] mx-auto">
-				{almuerzos.map(almuerzo => (
+				{menus.map(menu => (
 					<div
-						key={almuerzo.id}
+						key={menu.id}
 						className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-2 border-emerald-400"
 					>
 						<div className="relative mb-6">
 							<img
-								src={almuerzo.imagen}
-								alt={almuerzo.nombre}
+								src={menu.image}
+								alt={menu.name}
 								className="w-full h-56 object-cover rounded-xl shadow-md hover:shadow-lg transition-shadow"
 							/>
 							<div className="absolute top-3 right-3 bg-amber-500 text-white px-4 py-1 rounded-full font-semibold shadow-lg">
-								${almuerzo.precio.toFixed(2)}
+								${menu.price.toFixed(2)}
 							</div>
 						</div>
 						<h3 className="text-2xl font-bold text-emerald-950 mb-2">
-							{almuerzo.nombre}
+							{menu.name}
 						</h3>
 						<p className="text-emerald-700 mb-4 font-medium">
-							{almuerzo.descripcion}
+							{menu.description}
 						</p>
 						<button
 							className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center px-6 py-4 rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg gap-3 font-semibold"
-							onClick={() => handleAddToCart(almuerzo)}
+							onClick={() => handleAddToCart(menu)}
 						>
 							<TiShoppingCart className="text-2xl" />
 							<p>Agregar al Carrito</p>
@@ -102,4 +72,4 @@ const Almuerzos = ({ addToCart }) => {
 	);
 };
 
-export default Almuerzos;
+export default MenuList;

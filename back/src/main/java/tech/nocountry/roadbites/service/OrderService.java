@@ -18,7 +18,6 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderMenuRepository orderMenuRepository;
-    private final UserService userService;
     private final MenuService menuService;
 
     public OrderResponseDTO placeOrder(PlaceOrderDTO order) {

@@ -26,7 +26,7 @@ const Carrito = ({ cartItems, setCartItems }) => {
 	};
 
 	const total = cartItems.reduce((sum, item) => {
-		const itemTotal = item.precio * item.quantity;
+		const itemTotal = item.price * item.quantity;
 		return sum + itemTotal;
 	}, 0);
 
@@ -62,13 +62,13 @@ const Carrito = ({ cartItems, setCartItems }) => {
 								<div className="w-24 h-24">
 									<img
 										src={item.img}
-										alt={item.nombre}
+										alt={item.name}
 										className="w-full h-full object-cover rounded-lg"
 									/>
 								</div>
 								<div className="flex-1">
-									<h3 className="text-xl font-semibold">{item.nombre}</h3>
-									<p className="text-gray-600">{item.descripcion}</p>
+									<h3 className="text-xl font-semibold">{item.name}</h3>
+									<p className="text-gray-600">{item.description}</p>
 
 									<div className="flex items-center gap-2">
 										<button onClick={() => decreaseQuantity(item.id)}>
@@ -83,7 +83,7 @@ const Carrito = ({ cartItems, setCartItems }) => {
 									</div>
 								</div>
 								<p className="text-lg font-bold text-green-600">
-									Precio: ${(item.precio * (item.quantity || 1)).toFixed(2)}
+									price: ${(item.price * (item.quantity || 1)).toFixed(2)}
 								</p>
 							</div>
 						</motion.div>
@@ -92,7 +92,7 @@ const Carrito = ({ cartItems, setCartItems }) => {
 
 				{cartItems.length === 0 ? (
 					<p className="text-center text-emerald-600 bg-white p-4 rounded-lg">
-						No hay productos en el carrito
+						No hay menuos en el carrito
 					</p>
 				) : (
 					<div className="mt-6 bg-slate-50 w-fit ml-auto p-4 rounded-lg shadow-md">
