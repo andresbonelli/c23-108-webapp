@@ -11,8 +11,6 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.testcontainers.containers.MySQLContainer;
 import tech.nocountry.roadbites.domain.repository.UserRepository;
 
-import static org.aspectj.bridge.MessageUtil.fail;
-
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTests {
@@ -84,7 +82,7 @@ public class UserControllerTests {
                     "lastName": "Perez",
                     "email": "testuser2@example.com",
                     "phone": "11111111",
-                    "password": "123456"
+                    "plainPassword": "123456"
                 }
                 """)
                 .when()

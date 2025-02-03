@@ -8,6 +8,7 @@ import java.util.List;
 public record OrderResponseDTO(
         Long id,
         String userName,
+        String userEmail,
         LocalDateTime  orderDate,
         OrderStatus status,
         List<OrderMenuResponseDTO> orderMenus
