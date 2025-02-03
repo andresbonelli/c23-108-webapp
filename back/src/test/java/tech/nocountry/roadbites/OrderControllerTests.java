@@ -37,9 +37,13 @@ public class OrderControllerTests {
         String requestBody = """
                 {
                     "userName": "test user",
+                    "userEmail": "test@example.com",
                     "orderMenus": [
                             {
                                 "menuId": 1,
+                                "menuName": "test menu",
+                                "menuImage": "http://example.com/image.jpg",
+                                "menuPrice": 10.0,
                                 "quantity": 1
                             }
                         ]
@@ -53,6 +57,7 @@ public class OrderControllerTests {
                 .then()
                 .statusCode(201)
                 .body("userName", Matchers.equalTo("test user"))
+                .body("userEmail", Matchers.equalTo("test@example.com"))
                 .body("orderMenus[0].menuId", Matchers.equalTo(1))
                 .body("orderMenus[0].quantity", Matchers.equalTo(1));
     }

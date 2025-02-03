@@ -84,7 +84,7 @@ public class UserControllerTests {
                     "lastName": "Perez",
                     "email": "testuser2@example.com",
                     "phone": "11111111",
-                    "password": "123456"
+                    "plainPassword": "123456"
                 }
                 """)
                 .when()
