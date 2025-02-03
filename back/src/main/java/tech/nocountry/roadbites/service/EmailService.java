@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -50,22 +51,5 @@ public class EmailService {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-    }
-
-    private String buildOrderEmail(List<OrderMenu> orderMenus) {
-        String orderList = orderMenus.stream()
-                .map(orderMenu -> "- " + orderMenu.getMenu().getName() + " (" + orderMenu.getQuantity() + ")")
-                .collect(Collectors.joining("<br>"));
-
-        return """
-                <html>
-                <body>
-                    <h2>Pedido Confirmado</h2>
-                    <p>Tu pedido ha sido recibido con éxito:</p>
-                    <p>%s</p>
-                    <p>¡Gracias por tu compra!</p>
-                </body>
-                </html>
-                """.formatted(orderList);
     }
 }
