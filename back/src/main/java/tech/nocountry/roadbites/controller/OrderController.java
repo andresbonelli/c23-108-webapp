@@ -1,5 +1,6 @@
 package tech.nocountry.roadbites.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponseDTO placeOrder(@RequestBody PlaceOrderDTO order) {
+    public OrderResponseDTO placeOrder(@Valid @RequestBody PlaceOrderDTO order) {
         return orderService.placeOrder(order);
     }
 

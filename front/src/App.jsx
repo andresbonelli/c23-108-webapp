@@ -1,8 +1,6 @@
 import { Routes, Route } from 'react-router';
 import Home from './components/Home';
-import Bebidas from './components/Bebidas';
-import Snacks from './components/Snacks';
-import Almuerzos from './components/Almuerzos';
+import MenuList from './components/MenuList';
 import Carrito from './components/Carrito';
 import { useState } from 'react';
 import Navbar from './components/Navbar';
@@ -23,7 +21,7 @@ function App() {
 						const newQuantity = Number(cartItem.quantity || 1) + 1;
 						console.log(
 							'Updating quantity for:',
-							cartItem.nombre,
+							cartItem.name,
 							'New quantity:',
 							newQuantity
 						);
@@ -36,7 +34,7 @@ function App() {
 				});
 			}
 
-			console.log('Adding new item:', item.nombre, 'Quantity: 1');
+			console.log('Adding new item:', item.name, 'Quantity: 1');
 			return [...prevItems, { ...item, quantity: 1 }];
 		});
 	};
@@ -49,10 +47,10 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route
 					path="/almuerzos"
-					element={<Almuerzos addToCart={addToCart} />}
+					element={<MenuList addToCart={addToCart} category={"almuerzos"}/>}
 				/>
-				<Route path="/bebidas" element={<Bebidas addToCart={addToCart} />} />
-				<Route path="/snacks" element={<Snacks addToCart={addToCart} />} />
+				<Route path="/bebidas" element={<MenuList addToCart={addToCart} category={"bebidas"} />} />
+				<Route path="/snacks" element={<MenuList addToCart={addToCart} category={"snacks"} />} />
 				<Route
 					path="/carrito"
 					element={
