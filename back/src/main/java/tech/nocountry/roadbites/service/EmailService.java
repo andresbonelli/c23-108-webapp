@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public abstract class EmailService {
+public class EmailService {
 
     private static final Logger log = LoggerFactory.getLogger(EmailService.class);
 
@@ -36,6 +36,4 @@ public abstract class EmailService {
             e.printStackTrace();
         }
     }
-
-    public abstract void sendEmail(String to, String subject, String body);
 }
