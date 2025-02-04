@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Import;
 import org.testcontainers.containers.MySQLContainer;
+import tech.nocountry.roadbites.config.TestConfig;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Import(TestConfig.class)
 public class OrderControllerTests {
 
     @ServiceConnection
@@ -43,7 +46,7 @@ public class OrderControllerTests {
                                 "menuId": 1,
                                 "menuName": "test menu",
                                 "menuImage": "http://example.com/image.jpg",
-                                "menuPrice": 10.0,
+                                "price": 10.0,
                                 "quantity": 1
                             }
                         ]
