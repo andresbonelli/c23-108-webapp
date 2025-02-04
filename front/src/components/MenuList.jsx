@@ -1,35 +1,93 @@
 /* eslint-disable react/prop-types */
 import { TiShoppingCart } from 'react-icons/ti';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 
-const MenuList = ({ addToCart, category }) => {
+// 1. Memoizamos todo el componente para evitar re-renders innecesarios
+const MenuList = memo(({ addToCart, category }) => {
 	const [menus, setMenus] = useState([]);
 
+	// 2. Manejamos el estado de carga y error
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState(null);
+
+	// 3. Memoizamos el fetch de datos
 	useEffect(() => {
-		console.log('Fetching data for category:', category);
-		fetch(`http://localhost:8080/api/menu/category/${category}`)
-			.then(response => response.json())
-			.then(data => {
+		const fetchData = async () => {
+			try {
+				setIsLoading(true);
+				const response = await fetch(
+					`http://localhost:8080/api/menu/category/${category}`
+				);
+				if (!response.ok) throw new Error('Error en la respuesta');
+				const data = await response.json();
 				setMenus(data);
-			})
-			.catch(error => {
-				console.error('Error fetching menus:', error);
+			} catch (err) {
+				console.error('Error fetching menus:', err);
+				setError(err.message);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchData();
+	}, [category]); // Solo se ejecuta cuando cambia la categoría
+
+	// 4. Memoizamos el manejador del carrito
+	const handleAddToCart = useCallback(
+		(e, menu) => {
+			e.preventDefault();
+			e.stopPropagation();
+
+			addToCart({
+				id: menu.id,
+				img: menu.image,
+				name: menu.name,
+				price: menu.price,
 			});
-	}, [category]);
+		},
+		[addToCart]
+	); // Dependencia estable
 
-	const handleAddToCart = (e, menu) => {
-		e.preventDefault();
-		e.stopPropagation();
-		e.currentTarget.blur();
+	// 5. Optimizamos el renderizado de items
+	const renderMenuItems = useCallback(() => {
+		if (isLoading)
+			return <div className="text-center text-2xl">Cargando...</div>;
+		if (error)
+			return <div className="text-center text-red-500">Error: {error}</div>;
 
-		addToCart({
-			id: menu.id,
-			img: menu.image,
-			name: menu.name,
-			price: menu.price,
-		});
-	};
+		return menus.map(menu => (
+			<div
+				key={menu.id} // Evitamos usar index en el key
+				className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-2 border-emerald-400"
+			>
+				<div className="relative mb-6">
+					<img
+						src={menu.image}
+						alt={menu.name}
+						loading="lazy" // 6. Lazy loading para imágenes
+						className="w-full h-56 object-cover rounded-xl shadow-md hover:shadow-lg transition-shadow"
+					/>
+					<div className="absolute top-3 right-3 bg-amber-500 text-white px-4 py-1 rounded-full font-semibold shadow-lg">
+						${menu.price.toFixed(2)}
+					</div>
+				</div>
+				<h3 className="text-2xl font-bold text-emerald-950 mb-2">
+					{menu.name}
+				</h3>
+				<p className="text-emerald-700 mb-4 font-medium">{menu.description}</p>
+				<button
+					onPointerDown={e => e.preventDefault()} // Mejor manejo de eventos
+					onClick={e => handleAddToCart(e, menu)}
+					className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center px-6 py-4 rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg gap-3 font-semibold focus:outline-none"
+				>
+					<TiShoppingCart className="text-2xl" />
+					<p>Agregar al Carrito</p>
+				</button>
+			</div>
+		));
+	}, [menus, isLoading, error, handleAddToCart]);
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -42,40 +100,13 @@ const MenuList = ({ addToCart, category }) => {
 				Menú de {category}
 			</h2>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-[90%] mx-auto">
-				{menus.map((menu, index) => (
-					<div
-						key={`${menu.id}-${index}`}
-						className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-2 border-emerald-400"
-					>
-						<div className="relative mb-6">
-							<img
-								src={menu.image}
-								alt={menu.name}
-								className="w-full h-56 object-cover rounded-xl shadow-md hover:shadow-lg transition-shadow"
-							/>
-							<div className="absolute top-3 right-3 bg-amber-500 text-white px-4 py-1 rounded-full font-semibold shadow-lg">
-								${menu.price.toFixed(2)}
-							</div>
-						</div>
-						<h3 className="text-2xl font-bold text-emerald-950 mb-2">
-							{menu.name}
-						</h3>
-						<p className="text-emerald-700 mb-4 font-medium">
-							{menu.description}
-						</p>
-						<button
-							tabIndex="-1" // Evita que el botón reciba focus
-							onMouseDown={e => e.preventDefault()} // Evita focus al hacer click
-							onClick={e => handleAddToCart(e, menu)}
-							className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center px-6 py-4 rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg gap-3 font-semibold"
-						>
-							<TiShoppingCart className="text-2xl" />
-							<p>Agregar al Carrito</p>
-						</button>
-					</div>
-				))}
+				{renderMenuItems()}
 			</div>
 		</motion.div>
 	);
-};
+});
+
+// 7. Aseguramos la visualización del nombre del componente en DevTools
+MenuList.displayName = 'MenuList';
+
 export default MenuList;

@@ -3,10 +3,12 @@
 import { GrSubtractCircle, GrAddCircle } from 'react-icons/gr';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import Loader from './Loader';
 
 const Carrito = ({ cartItems, setCartItems }) => {
 	const [nombre, setNombre] = useState('');
 	const [email, setEmail] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 
 	const increaseQuantity = itemId => {
 		setCartItems(prevItems =>
@@ -36,6 +38,7 @@ const Carrito = ({ cartItems, setCartItems }) => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
+		setIsLoading(true);
 		let orderMenus = [];
 		for (let i = 0; i < cartItems.length; i++) {
 			orderMenus.push({
@@ -60,7 +63,10 @@ const Carrito = ({ cartItems, setCartItems }) => {
 			body: JSON.stringify(orden),
 		})
 			.then(res => res.json())
-			.then(response => console.log(response));
+			.then(response => {
+				console.log(response);
+				setIsLoading(false);
+			});
 	};
 
 	return (
@@ -147,12 +153,16 @@ const Carrito = ({ cartItems, setCartItems }) => {
 						placeholder="Email"
 						className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
 					/>
-					<button
-						onClick={handleSubmit}
-						className="bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors"
-					>
-						Ordenar
-					</button>
+					{isLoading ? (
+						<Loader />
+					) : (
+						<button
+							onClick={handleSubmit}
+							className="bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors"
+						>
+							Ordenar
+						</button>
+					)}
 				</form>
 			</motion.div>
 		</motion.div>

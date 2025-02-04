@@ -9,19 +9,22 @@ import { AnimatePresence } from 'framer-motion';
 function App() {
 	const [cartItems, setCartItems] = useState([]);
 
-	const addToCart = useCallback(menuItem => {
-		setCartItems(prevItems => {
-			const existingItem = prevItems.find(item => item.id === menuItem.id);
-			if (existingItem) {
-				return prevItems.map(item =>
-					item.id === menuItem.id
-						? { ...item, quantity: item.quantity + 1 }
-						: item
-				);
-			}
-			return [...prevItems, { ...menuItem, quantity: 1 }];
-		});
-	}, []);
+	const addToCart = useCallback(
+		menuItem => {
+			setCartItems(prevItems => {
+				const existingItem = prevItems.find(item => item.id === menuItem.id);
+				if (existingItem) {
+					return prevItems.map(item =>
+						item.id === menuItem.id
+							? { ...item, quantity: item.quantity + 1 }
+							: item
+					);
+				}
+				return [...prevItems, { ...menuItem, quantity: 1 }];
+			});
+		},
+		[setCartItems]
+	);
 
 	return (
 		<>
