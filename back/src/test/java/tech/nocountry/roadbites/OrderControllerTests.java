@@ -5,16 +5,21 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Import;
 import org.testcontainers.containers.MySQLContainer;
 import tech.nocountry.roadbites.config.TestConfig;
+import tech.nocountry.roadbites.service.EmailService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(TestConfig.class)
 public class OrderControllerTests {
+
 
     @ServiceConnection
     static final MySQLContainer mySqlContainer = new MySQLContainer("mysql:8.3.0")
@@ -62,7 +67,10 @@ public class OrderControllerTests {
                 .body("userName", Matchers.equalTo("test user"))
                 .body("userEmail", Matchers.equalTo("test@example.com"))
                 .body("orderMenus[0].menuId", Matchers.equalTo(1))
-                .body("orderMenus[0].quantity", Matchers.equalTo(1));
+                .body("orderMenus[0].quantity", Matchers.equalTo(1))
+                .body("orderMenus[0].menuName", Matchers.nullValue())
+                .body("orderMenus[0].menuImage", Matchers.nullValue())
+                .body("orderMenus[0].price", Matchers.nullValue());
     }
 
     @AfterAll
