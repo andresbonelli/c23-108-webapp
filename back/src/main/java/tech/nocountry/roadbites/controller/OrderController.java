@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/order")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class OrderController {
 
