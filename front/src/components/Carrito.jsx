@@ -134,36 +134,38 @@ const Carrito = ({ cartItems, setCartItems }) => {
 						No hay menuos en el carrito
 					</p>
 				) : (
-					<div className="mt-6 bg-slate-50 w-fit ml-auto p-4 rounded-lg shadow-md">
-						<p className="text-2xl font-bold text-red-600 text-right">
-							Total: ${total.toFixed(2)}
-						</p>
-					</div>
+					<>
+						<div className="mt-6 bg-slate-50 w-fit ml-auto p-4 rounded-lg shadow-md">
+							<p className="text-2xl font-bold text-red-600 text-right">
+								Total: ${total.toFixed(2)}
+							</p>
+						</div>
+						<form className="mt-2 bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-4 w-1/2 mx-auto">
+							<input
+								type="text"
+								onChange={e => setNombre(e.target.value)}
+								placeholder="Nombre"
+								className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+							/>
+							<input
+								type="email"
+								onChange={e => setEmail(e.target.value)}
+								placeholder="Email"
+								className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+							/>
+							{isLoading ? (
+								<Loader />
+							) : (
+								<button
+									onClick={handleSubmit}
+									className="bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors"
+								>
+									Ordenar
+								</button>
+							)}
+						</form>
+					</>
 				)}
-				<form className="mt-2 bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-4 w-1/2 mx-auto">
-					<input
-						type="text"
-						onChange={e => setNombre(e.target.value)}
-						placeholder="Nombre"
-						className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-					/>
-					<input
-						type="email"
-						onChange={e => setEmail(e.target.value)}
-						placeholder="Email"
-						className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-					/>
-					{isLoading ? (
-						<Loader />
-					) : (
-						<button
-							onClick={handleSubmit}
-							className="bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors"
-						>
-							Ordenar
-						</button>
-					)}
-				</form>
 			</motion.div>
 		</motion.div>
 	);
