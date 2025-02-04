@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react';
 
 const MenuList = ({ addToCart, category }) => {
 	const [menus, setMenus] = useState([]);
+
 	useEffect(() => {
+		console.log('Fetching data for category:', category);
 		fetch(`http://localhost:8080/api/menu/category/${category}`)
 			.then(response => response.json())
 			.then(data => {
@@ -15,8 +17,12 @@ const MenuList = ({ addToCart, category }) => {
 				console.error('Error fetching menus:', error);
 			});
 	}, [category]);
-	const handleAddToCart = menu => {
-		console.log(menu);
+
+	const handleAddToCart = (e, menu) => {
+		e.preventDefault();
+		e.stopPropagation();
+		e.currentTarget.blur();
+
 		addToCart({
 			id: menu.id,
 			img: menu.image,
@@ -28,7 +34,6 @@ const MenuList = ({ addToCart, category }) => {
 		<motion.div
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
 			transition={{ duration: 1 }}
 			style={{ backgroundImage: "url('/src/assets/img/bg_food.jpg')" }}
 			className="container mx-auto p-8 bg-fixed"
@@ -37,9 +42,9 @@ const MenuList = ({ addToCart, category }) => {
 				Menú de {category}
 			</h2>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-[90%] mx-auto">
-				{menus.map(menu => (
+				{menus.map((menu, index) => (
 					<div
-						key={menu.id}
+						key={`${menu.id}-${index}`}
 						className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-2 border-emerald-400"
 					>
 						<div className="relative mb-6">
@@ -59,8 +64,10 @@ const MenuList = ({ addToCart, category }) => {
 							{menu.description}
 						</p>
 						<button
+							tabIndex="-1" // Evita que el botón reciba focus
+							onMouseDown={e => e.preventDefault()} // Evita focus al hacer click
+							onClick={e => handleAddToCart(e, menu)}
 							className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center px-6 py-4 rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg gap-3 font-semibold"
-							onClick={() => handleAddToCart(menu)}
 						>
 							<TiShoppingCart className="text-2xl" />
 							<p>Agregar al Carrito</p>
@@ -71,5 +78,4 @@ const MenuList = ({ addToCart, category }) => {
 		</motion.div>
 	);
 };
-
 export default MenuList;

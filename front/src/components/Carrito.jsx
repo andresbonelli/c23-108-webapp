@@ -2,8 +2,12 @@
 
 import { GrSubtractCircle, GrAddCircle } from 'react-icons/gr';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 
 const Carrito = ({ cartItems, setCartItems }) => {
+	const [nombre, setNombre] = useState('');
+	const [email, setEmail] = useState('');
+
 	const increaseQuantity = itemId => {
 		setCartItems(prevItems =>
 			prevItems.map(item =>
@@ -30,6 +34,35 @@ const Carrito = ({ cartItems, setCartItems }) => {
 		return sum + itemTotal;
 	}, 0);
 
+	const handleSubmit = e => {
+		e.preventDefault();
+		let orderMenus = [];
+		for (let i = 0; i < cartItems.length; i++) {
+			orderMenus.push({
+				menuId: cartItems[i].id,
+				menuName: cartItems[i].name,
+				image: cartItems[i].img,
+				price: cartItems[i].price,
+				quantity: cartItems[i].quantity,
+			});
+		}
+
+		const orden = {
+			userName: nombre,
+			userEmail: email,
+			orderMenus,
+		};
+		fetch('http://localhost:8080/api/order', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(orden),
+		})
+			.then(res => res.json())
+			.then(response => console.log(response));
+	};
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -49,9 +82,9 @@ const Carrito = ({ cartItems, setCartItems }) => {
 				className="grid gap-6"
 			>
 				<AnimatePresence>
-					{cartItems.map(item => (
+					{cartItems.map((item, index) => (
 						<motion.div
-							key={item.id}
+							key={`${item.id}-${index}`}
 							initial={{ opacity: 0, y: -20 }}
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0, y: -20 }}
@@ -101,6 +134,26 @@ const Carrito = ({ cartItems, setCartItems }) => {
 						</p>
 					</div>
 				)}
+				<form className="mt-2 bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-4 w-1/2 mx-auto">
+					<input
+						type="text"
+						onChange={e => setNombre(e.target.value)}
+						placeholder="Nombre"
+						className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+					/>
+					<input
+						type="email"
+						onChange={e => setEmail(e.target.value)}
+						placeholder="Email"
+						className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+					/>
+					<button
+						onClick={handleSubmit}
+						className="bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors"
+					>
+						Ordenar
+					</button>
+				</form>
 			</motion.div>
 		</motion.div>
 	);
