@@ -2,72 +2,86 @@
 
 import { GrSubtractCircle, GrAddCircle } from 'react-icons/gr';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { memo, useCallback, useState, useMemo } from 'react';
 import Loader from './Loader';
 
-const Carrito = ({ cartItems, setCartItems }) => {
+const Carrito = memo(({ cartItems, setCartItems }) => {
 	const [nombre, setNombre] = useState('');
 	const [email, setEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 
-	const increaseQuantity = itemId => {
-		setCartItems(prevItems =>
-			prevItems.map(item =>
-				item.id === itemId
-					? { ...item, quantity: (item.quantity || 1) + 1 }
-					: item
-			)
-		);
-	};
-	const decreaseQuantity = itemId => {
-		setCartItems(prevItems => {
-			const item = prevItems.find(item => item.id === itemId);
-			if (item.quantity <= 1) {
-				return prevItems.filter(item => item.id !== itemId);
-			}
-			return prevItems.map(item =>
-				item.id === itemId ? { ...item, quantity: item.quantity - 1 } : item
+	const increaseQuantity = useCallback(
+		itemId => {
+			setCartItems(prevItems =>
+				prevItems.map(item =>
+					item.id === itemId
+						? { ...item, quantity: (item.quantity || 1) + 1 }
+						: item
+				)
 			);
-		});
-	};
+		},
+		[setCartItems]
+	);
 
-	const total = cartItems.reduce((sum, item) => {
-		const itemTotal = item.price * item.quantity;
-		return sum + itemTotal;
-	}, 0);
-
-	const handleSubmit = e => {
-		e.preventDefault();
-		setIsLoading(true);
-		let orderMenus = [];
-		for (let i = 0; i < cartItems.length; i++) {
-			orderMenus.push({
-				menuId: cartItems[i].id,
-				menuName: cartItems[i].name,
-				image: cartItems[i].img,
-				price: cartItems[i].price,
-				quantity: cartItems[i].quantity,
+	const decreaseQuantity = useCallback(
+		itemId => {
+			setCartItems(prevItems => {
+				const item = prevItems.find(item => item.id === itemId);
+				if (item.quantity <= 1) {
+					return prevItems.filter(item => item.id !== itemId);
+				}
+				return prevItems.map(item =>
+					item.id === itemId ? { ...item, quantity: item.quantity - 1 } : item
+				);
 			});
-		}
+		},
+		[setCartItems]
+	);
 
-		const orden = {
-			userName: nombre,
-			userEmail: email,
-			orderMenus,
-		};
-		fetch('http://localhost:8080/api/order', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(orden),
-		})
-			.then(res => res.json())
-			.then(response => {
-				console.log(response);
+	const total = useMemo(() => {
+		return cartItems.reduce((sum, item) => {
+			const itemTotal = item.price * item.quantity;
+			return sum + itemTotal;
+		}, 0);
+	}, [cartItems]);
+
+	const handleSubmit = useCallback(
+		async e => {
+			e.preventDefault();
+			setIsLoading(true);
+
+			const orderMenus = cartItems.map(item => ({
+				menuId: item.id,
+				menuName: item.name,
+				image: item.img,
+				price: item.price,
+				quantity: item.quantity,
+			}));
+
+			const orden = {
+				userName: nombre,
+				userEmail: email,
+				orderMenus,
+			};
+
+			try {
+				const response = await fetch('http://localhost:8080/api/order', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(orden),
+				});
+				const data = await response.json();
+				console.log(data);
+			} catch (error) {
+				console.error('Error:', error);
+			} finally {
 				setIsLoading(false);
-			});
-	};
+			}
+		},
+		[cartItems, nombre, email]
+	);
 
 	return (
 		<motion.div
@@ -169,6 +183,8 @@ const Carrito = ({ cartItems, setCartItems }) => {
 			</motion.div>
 		</motion.div>
 	);
-};
+});
+
+Carrito.displayName = 'Carrito';
 
 export default Carrito;

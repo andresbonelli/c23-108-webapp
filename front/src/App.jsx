@@ -9,25 +9,22 @@ import { AnimatePresence } from 'framer-motion';
 function App() {
 	const [cartItems, setCartItems] = useState([]);
 
-	const addToCart = useCallback(
-		menuItem => {
-			setCartItems(prevItems => {
-				const existingItem = prevItems.find(item => item.id === menuItem.id);
-				if (existingItem) {
-					return prevItems.map(item =>
-						item.id === menuItem.id
-							? { ...item, quantity: item.quantity + 1 }
-							: item
-					);
-				}
-				return [...prevItems, { ...menuItem, quantity: 1 }];
-			});
-		},
-		[setCartItems]
-	);
+	const addToCart = useCallback(menuItem => {
+		setCartItems(prevItems => {
+			const existingItem = prevItems.find(item => item.id === menuItem.id);
+			if (existingItem) {
+				return prevItems.map(item =>
+					item.id === menuItem.id
+						? { ...item, quantity: item.quantity + 1 }
+						: item
+				);
+			}
+			return [...prevItems, { ...menuItem, quantity: 1 }];
+		});
+	}, []);
 
 	return (
-		<>
+		<div className="flex flex-col items-center max-w-[1200px">
 			<Navbar cartItems={cartItems} />
 			<AnimatePresence mode="wait">
 				<Routes location={location} key={location.pathname}>
@@ -53,7 +50,7 @@ function App() {
 					/>
 				</Routes>
 			</AnimatePresence>
-		</>
+		</div>
 	);
 }
 
