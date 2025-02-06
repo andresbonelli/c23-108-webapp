@@ -24,7 +24,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMenuRepository orderMenuRepository;
     private final MenuService menuService;
-    private final EmailService  emailService;
+    private final EmailService emailService;
 
     public OrderResponseDTO placeOrder(PlaceOrderDTO order) {
         Order newOrder = buildOrderFromDto(order);
