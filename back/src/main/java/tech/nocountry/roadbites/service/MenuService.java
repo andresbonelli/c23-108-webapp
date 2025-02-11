@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tech.nocountry.roadbites.controller.dto.menu.MenuResponseDTO;
 import tech.nocountry.roadbites.domain.model.Menu;
 import tech.nocountry.roadbites.domain.repository.MenuRepository;
+import tech.nocountry.roadbites.service.exceptions.MenuNotFoundException;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class MenuService {
     }
 
     public Menu getMenuById(Long id) {
-        return menuRepository.findById(id).orElse(null);
+        return menuRepository.findById(id).orElseThrow(MenuNotFoundException::new);
     }
 
 }

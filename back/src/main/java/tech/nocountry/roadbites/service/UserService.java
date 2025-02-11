@@ -10,6 +10,7 @@ import tech.nocountry.roadbites.domain.model.AccountStatus;
 import tech.nocountry.roadbites.domain.model.Role;
 import tech.nocountry.roadbites.domain.model.User;
 import tech.nocountry.roadbites.domain.repository.UserRepository;
+import tech.nocountry.roadbites.service.exceptions.UserNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +26,7 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     public User createUser(RegisterUserDTO userDetails) {
